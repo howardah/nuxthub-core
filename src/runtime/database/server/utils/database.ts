@@ -20,6 +20,7 @@ let _db: D1Database
  */
 export function hubDatabase(): D1Database {
   requireNuxtHubFeature('database')
+  console.log('hubDatabase')
 
   if (_db) {
     return _db
@@ -28,10 +29,12 @@ export function hubDatabase(): D1Database {
   // @ts-expect-error globalThis.__env__ is not defined
   const binding = process.env.DB || globalThis.__env__?.DB || globalThis.DB
   if (hub.remote && hub.projectUrl && !binding) {
+    console.log('proxyHubDatabase', hub.projectUrl, hub.projectSecretKey || hub.userToken)
     _db = proxyHubDatabase(hub.projectUrl, hub.projectSecretKey || hub.userToken)
     return _db
   }
   if (binding) {
+    console.log('binding', binding)
     _db = binding as D1Database
     return _db
   }
