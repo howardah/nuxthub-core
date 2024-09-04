@@ -24,7 +24,7 @@ export interface HubConfig {
   analytics?: boolean
   blob?: boolean
   cache?: boolean
-  database?: boolean
+  database?: boolean | string | { name: string, id: string }
   kv?: boolean
 
   bindings?: {

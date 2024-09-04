@@ -33,10 +33,19 @@ export function generateWrangler(nuxt: Nuxt, hub: HubConfig) {
   }
 
   if (hub.database) {
+    console.log('hub.database', hub.database)
+    let database_name = 'default'
+    let database_id = typeof hub.database === 'boolean' ? 'default' : hub.database
+
+    if (typeof hub.database === 'object') {
+      database_name = hub.database?.name || 'default'
+      database_id = hub.database?.id || 'default'
+    }
+
     wrangler['d1_databases'] = [{
       binding: 'DB',
-      database_name: 'default',
-      database_id: 'default'
+      database_name,
+      database_id
     }]
   }
 
